@@ -9,7 +9,7 @@ const generateSquareComponents = (squares, onClickCallback) => {
     <Square 
       id={props.id} 
       value={props.value} 
-      onClickCallback={onClickCallback} 
+      onClickCallback={onClickCallback}
     />
   );
 };

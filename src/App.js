@@ -28,17 +28,24 @@ const generateSquares = () => {
 const App = () => {
 
   const [squares, setSquares] = useState(generateSquares());
-
+  const [player, setPlayer] = useState(PLAYER_1);
   // Wave 2
   // create onClickCallback function that changes the value of the square when it is clicked
   const onClickCallback = (id) => {
     // construct a new 2D array with the value of the selected square (the one whose ID we are passing in) changed to either 'x' or 'o'
+    if (id >= 0 && id <= 2) {
+      squares[0][id]['value'] = player;
+    } else if (id >= 3 && id <= 5) {
+      squares[1][id-3]['value'] = player;
+    } else if (id >= 6 && id <= 8) {
+      squares[2][id-6]['value'] = player;
+    };
     // set state logic, on click:
     // if the player is set to 'x', set it to 'o'
     // if the player is set to 'o', set it to 'x'
-    setSquares() // pass the new array in here
+    (player === PLAYER_1) ? setPlayer(PLAYER_2) : setPlayer(PLAYER_1);
+    setSquares(squares); // pass the new array in here
   };
-  // adds prop onClickCallback  to Board component on Line 54
 
   const checkForWinner = () => {
     // Complete in Wave 3
@@ -57,7 +64,7 @@ const App = () => {
         <button>Reset Game</button>
       </header>
       <main>
-        <Board squares={squares} />
+        <Board squares={squares} onClickCallback={onClickCallback} />
       </main>
     </div>
   );
