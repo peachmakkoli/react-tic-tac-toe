@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 const generateSquareComponents = (squares, onClickCallback) => {
   // Complete this for Wave 1
-
+  // loop through squares (array of props), return a new Square component with id set to props.id and value set to props.value
 }
 
 const Board = ({ squares, onClickCallback }) => {
