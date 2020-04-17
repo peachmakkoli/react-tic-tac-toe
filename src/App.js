@@ -30,10 +30,8 @@ const App = () => {
   const [squares, setSquares] = useState(generateSquares());
 
   // Wave 2
-  // You will need to create a method to change the square 
-  //   When it is clicked on.
-  //   Then pass it into the squares as a callback
-
+  // create onClickCallback function that changes the value of the square when it is clicked
+  // adds prop onClickCallback  to Board component on Line 54
 
   const checkForWinner = () => {
     // Complete in Wave 3
