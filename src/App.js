@@ -31,6 +31,13 @@ const App = () => {
 
   // Wave 2
   // create onClickCallback function that changes the value of the square when it is clicked
+  const onClickCallback = (id) => {
+    // construct a new 2D array with the value of the selected square (the one whose ID we are passing in) changed to either 'x' or 'o'
+    // set state logic, on click:
+    // if the player is set to 'x', set it to 'o'
+    // if the player is set to 'o', set it to 'x'
+    setSquares() // pass the new array in here
+  };
   // adds prop onClickCallback  to Board component on Line 54
 
   const checkForWinner = () => {
