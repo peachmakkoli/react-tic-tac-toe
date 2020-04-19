@@ -47,26 +47,64 @@ const App = () => {
   };
 
   const checkForWinner = () => {
-    // check whether any row, column, or diagonal is filled with XXX or OOO
     const threeX = ['X', 'X', 'X'];
     const threeO = ['O', 'O', 'O'];
-    
-    // read values in the squares array?
-    const arrayEquals = (one, two) => {
-      const values = one.map(square => square.value);
-      return JSON.stringify(values) === JSON.stringify(two); 
-    }; // modified from Chelsea's solution posted in the C13 Slack #classroom-support channel
 
-    if (arrayEquals(squares[0], threeX)) {
-      setWinner(PLAYER_1);
-    } else if (arrayEquals(squares[0], threeO)) {
-      setWinner(PLAYER_2);
+    const rowValues = (row) => {
+      return row.map(square => square.value);
+    }; // helper function for creating an array of row values
+
+    const colValues = (col) => {
+      if (col === 1) {
+        return [squares[0][0].value, squares[1][0].value, squares[2][0].value];
+      } else if (col === 2) {
+        return [squares[0][1].value, squares[1][1].value, squares[2][1].value];
+      } else if (col === 3) {
+        return [squares[0][2].value, squares[1][2].value, squares[2][2].value];
+      };
+    }; // helper function for creating an array of column values
+
+    const diagValues = (diag) => {
+      if (diag === 1) {
+        return [squares[0][0].value, squares[1][1].value, squares[2][2].value];
+      } else if (diag === 2) {
+        return [squares[2][0].value, squares[1][1].value, squares[0][2].value];
+      };
+    }; // helper function for creating an array of diagonal values
+  
+    const arrayEquals = (one, two) => {
+      return JSON.stringify(one) === JSON.stringify(two); 
+    }; // from Chelsea's solution posted in the C13 Slack #classroom-support channel
+
+    if ( // win conditions for X
+      arrayEquals(rowValues(squares[0]), threeX) || // row 1
+      arrayEquals(rowValues(squares[1]), threeX) || // row 2
+      arrayEquals(rowValues(squares[2]), threeX) || // row 3
+      arrayEquals(colValues(1), threeX) || // column 1
+      arrayEquals(colValues(2), threeX) || // column 2 
+      arrayEquals(colValues(3), threeX) || // column 3
+      arrayEquals(diagValues(1), threeX) || // falling diagonal
+      arrayEquals(diagValues(2), threeX) // rising diagonal
+      ) {
+      setWinner(PLAYER_1); 
+      
+    } else if ( // win conditions for O
+      arrayEquals(rowValues(squares[0]), threeO) || // row 1
+      arrayEquals(rowValues(squares[1]), threeO) || // row 2
+      arrayEquals(rowValues(squares[2]), threeO) || // row 3
+      arrayEquals(colValues(1), threeO) || // column 1
+      arrayEquals(colValues(2), threeO) || // column 2 
+      arrayEquals(colValues(3), threeO) || // column 3
+      arrayEquals(diagValues(1), threeO) || // falling diagonal
+      arrayEquals(diagValues(2), threeO) // rising diagonal
+      ) {
+      setWinner(PLAYER_2); 
+    
+    } else { // tie condition
+      if (squares.flat().every(square => square.value !== '')) setWinner('TIE'); // does not trigger until every square has been filled
     };
     // if a player has won:
       // cease responding to clicks on the board -- this will prob need to be in Board.js, maybe create a conditional that prevents onClickCallback from being passed down to each Square component
-      // display the winner in the header section - return the player
-    // or if there is a tie (all squares filled with no winner):
-      // display in the header - return 'TIE'
 
   };
 
