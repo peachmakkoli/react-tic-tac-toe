@@ -11,19 +11,19 @@ const generateSquares = () => {
 
   let currentId = 0;
 
-  for (let row = 0; row < 3; row += 1) {
+  for (let row = 0; row < 3; row++) {
     squares.push([]);
-    for (let col = 0; col < 3; col += 1) {
+    for (let col = 0; col < 3; col++) {
       squares[row].push({
         id: currentId,
         value: '',
       });
-      currentId += 1;
-    }
-  }
+      currentId++;
+    };
+  };
 
   return squares;
-}
+};
 
 const App = () => {
 
@@ -31,21 +31,26 @@ const App = () => {
   const [mark, setMark] = useState(PLAYER_1);
   const [winner, setWinner] = useState('...');
 
-  const onClickCallback = (id) => {
-    if (winner !== '...') return;
+  const togglePlayer = () => {
+    (mark === PLAYER_1) ? setMark(PLAYER_2) : setMark(PLAYER_1);
+  }; // helper function that toggles 'X' or 'O'
 
+  const setSquareValue = (id) => {
     if (id >= 0 && id <= 2) {
-      squares[0][id]['value'] = mark; // if square is in row 1
+      squares[0][id].value = mark; // if square is in row 1
     } else if (id >= 3 && id <= 5) {
-      squares[1][id-3]['value'] = mark; // if square is in row 2
+      squares[1][id-3].value = mark; // if square is in row 2
     } else if (id >= 6 && id <= 8) {
-      squares[2][id-6]['value'] = mark; // if square is in row 3
+      squares[2][id-6].value = mark; // if square is in row 3
     };
+  }; // helper function that changes the value in place
 
-    (mark === PLAYER_1) ? setMark(PLAYER_2) : setMark(PLAYER_1); // toggle 'X' or 'O'
-    
-    setSquares(squares); // updates the state
+  const onClickCallback = (id) => {
+    if (winner !== '...') return; // ceases the board from responding to clicks if there's a winner
+    setSquareValue(id);
+    setSquares(squares); // updates the board
     checkForWinner();
+    togglePlayer();
   };
 
   const checkForWinner = () => {
@@ -57,26 +62,25 @@ const App = () => {
     }; // helper function for creating an array of row values
 
     const colValues = (col) => {
-      if (col === 1) {
-        return [squares[0][0].value, squares[1][0].value, squares[2][0].value];
-      } else if (col === 2) {
-        return [squares[0][1].value, squares[1][1].value, squares[2][1].value];
-      } else if (col === 3) {
-        return [squares[0][2].value, squares[1][2].value, squares[2][2].value];
+      switch (col) {
+        case 1:
+          return [squares[0][0].value, squares[1][0].value, squares[2][0].value];
+        case 2:
+          return [squares[0][1].value, squares[1][1].value, squares[2][1].value];
+        case 3:
+          return [squares[0][2].value, squares[1][2].value, squares[2][2].value];
+        default:
+          break;
       };
     }; // helper function for creating an array of column values
 
     const diagValues = (diag) => {
-      if (diag === 1) {
-        return [squares[0][0].value, squares[1][1].value, squares[2][2].value];
-      } else if (diag === 2) {
-        return [squares[2][0].value, squares[1][1].value, squares[0][2].value];
-      };
+      return (diag === 1) ? [squares[0][0].value, squares[1][1].value, squares[2][2].value] : [squares[2][0].value, squares[1][1].value, squares[0][2].value];
     }; // helper function for creating an array of diagonal values
   
     const arrayEquals = (one, two) => {
       return JSON.stringify(one) === JSON.stringify(two); 
-    }; // from Chelsea's solution posted in the C13 Slack #classroom-support channel
+    }; // helper function from Chelsea's solution posted in the C13 Slack #classroom-support channel
 
     if ( // win conditions for X
       arrayEquals(rowValues(squares[0]), threeX) || // row 1
@@ -108,13 +112,10 @@ const App = () => {
   };
 
   const resetGame = () => {
-    // can I just like...
-    // set the squares back to generateSquares()
     setSquares(generateSquares());
     setMark(PLAYER_1);
     setWinner('...');
-    // and add an onClick prop to the Reset Game button that calls the function on click?
-  }
+  };
 
   return (
     <div className="App">
@@ -128,6 +129,6 @@ const App = () => {
       </main>
     </div>
   );
-}
+};
 
 export default App;
