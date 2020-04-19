@@ -108,7 +108,9 @@ const App = () => {
   };
 
   const resetGame = () => {
-    // Complete in Wave 4
+    // can I just like...
+    // set the squares back to generateSquares()
+    // and add an onClick prop to the Reset Game button that calls the function on click?
   }
 
   return (
