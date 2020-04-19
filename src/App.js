@@ -110,6 +110,9 @@ const App = () => {
   const resetGame = () => {
     // can I just like...
     // set the squares back to generateSquares()
+    setSquares(generateSquares());
+    setMark(PLAYER_1);
+    setWinner('...');
     // and add an onClick prop to the Reset Game button that calls the function on click?
   }
 
@@ -117,8 +120,8 @@ const App = () => {
     <div className="App">
       <header className="App-header">
         <h1>React Tic Tac Toe</h1>
-        <h2>The winner is {winner} -- Fill in for wave 3 </h2>
-        <button>Reset Game</button>
+        <h2>The winner is {winner}</h2>
+        <button onClick={resetGame}>Reset Game</button>
       </header>
       <main>
         <Board squares={squares} onClickCallback={onClickCallback} />
