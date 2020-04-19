@@ -45,7 +45,13 @@ const App = () => {
   };
 
   const checkForWinner = () => {
-    // Complete in Wave 3
+    // check whether any row, column, or diagonal is filled with XXX or OOO
+    // read values in the squares array?
+    // if a player has won:
+      // cease responding to clicks on the board -- this will prob need to be in Board.js, maybe create a conditional that prevents onClickCallback from being passed down to each Square component
+      // display the winner in the header section - return the player add {checkForWinner} to the <h2> tag below?
+    // or if there is a tie (all squares filled with no winner):
+      // display in the header - return 'TIE'
 
   }
 
