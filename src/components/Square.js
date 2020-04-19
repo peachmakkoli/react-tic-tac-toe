@@ -4,14 +4,12 @@ import PropTypes from 'prop-types';
 import './Square.css'
 
 const Square = (props) => {  
-  const setSquareValue = () => {
-    if (props.value === '') props.onClickCallback(props.id); // will not call onClickCallback if the square already has an 'X' or 'O'
-  };
-  
   return <button
     className="square" 
     key={props.id} 
-    onClick={setSquareValue}
+    onClick={() => {
+      if (props.value === '') props.onClickCallback(props.id); // will not overwrite if square already has 'X' or 'O'
+    }} 
   >
     {props.value}
   </button>
