@@ -29,6 +29,7 @@ const App = () => {
 
   const [squares, setSquares] = useState(generateSquares());
   const [mark, setMark] = useState(PLAYER_1);
+  const [winner, setWinner] = useState('...');
 
   const onClickCallback = (id) => {
     if (id >= 0 && id <= 2) {
@@ -42,18 +43,32 @@ const App = () => {
     (mark === PLAYER_1) ? setMark(PLAYER_2) : setMark(PLAYER_1); // toggle 'X' or 'O'
     
     setSquares(squares); // updates the state
+    checkForWinner();
   };
 
   const checkForWinner = () => {
     // check whether any row, column, or diagonal is filled with XXX or OOO
+    const threeX = ['X', 'X', 'X'];
+    const threeO = ['O', 'O', 'O'];
+    
     // read values in the squares array?
+    const arrayEquals = (one, two) => {
+      const values = one.map(square => square.value);
+      return JSON.stringify(values) === JSON.stringify(two); 
+    }; // modified from Chelsea's solution posted in the C13 Slack #classroom-support channel
+
+    if (arrayEquals(squares[0], threeX)) {
+      setWinner(PLAYER_1);
+    } else if (arrayEquals(squares[0], threeO)) {
+      setWinner(PLAYER_2);
+    };
     // if a player has won:
       // cease responding to clicks on the board -- this will prob need to be in Board.js, maybe create a conditional that prevents onClickCallback from being passed down to each Square component
-      // display the winner in the header section - return the player add {checkForWinner} to the <h2> tag below?
+      // display the winner in the header section - return the player
     // or if there is a tie (all squares filled with no winner):
       // display in the header - return 'TIE'
 
-  }
+  };
 
   const resetGame = () => {
     // Complete in Wave 4
@@ -63,7 +78,7 @@ const App = () => {
     <div className="App">
       <header className="App-header">
         <h1>React Tic Tac Toe</h1>
-        <h2>The winner is ... -- Fill in for wave 3 </h2>
+        <h2>The winner is {winner} -- Fill in for wave 3 </h2>
         <button>Reset Game</button>
       </header>
       <main>
