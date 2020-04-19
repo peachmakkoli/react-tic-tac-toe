@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 
 
 const generateSquareComponents = (squares, onClickCallback) => {
-  return squares.flat().map(props => 
+  return squares.flat().map(square => 
     <Square 
-      id={props.id} 
-      value={props.value} 
+      id={square.id} 
+      value={square.value} 
       onClickCallback={onClickCallback}
     />
   );
