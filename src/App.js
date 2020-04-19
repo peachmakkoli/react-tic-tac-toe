@@ -32,6 +32,8 @@ const App = () => {
   const [winner, setWinner] = useState('...');
 
   const onClickCallback = (id) => {
+    if (winner !== '...') return;
+
     if (id >= 0 && id <= 2) {
       squares[0][id]['value'] = mark; // if square is in row 1
     } else if (id >= 3 && id <= 5) {
@@ -100,12 +102,9 @@ const App = () => {
       ) {
       setWinner(PLAYER_2); 
     
-    } else { // tie condition
-      if (squares.flat().every(square => square.value !== '')) setWinner('TIE'); // does not trigger until every square has been filled
+    } else if (squares.flat().every(square => square.value !== '')) { 
+      setWinner('TIE'); // does not trigger until every square has been filled
     };
-    // if a player has won:
-      // cease responding to clicks on the board -- this will prob need to be in Board.js, maybe create a conditional that prevents onClickCallback from being passed down to each Square component
-
   };
 
   const resetGame = () => {
